@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Welcome to ChatGPT Integration</h1>
+<h3>Ask me anything.</h3>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="user_input" class="form-control">
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+{% if response %}
+    <div>
+        {{ response|safe }}
+    </div>
+{% endif %}
+{% endblock content %}

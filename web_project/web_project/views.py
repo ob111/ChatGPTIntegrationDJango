@@ -11,17 +11,21 @@ def chatbot(request):
         openai.api_key = api_key
         user_input = request.POST.get('user_input')
         prompt = user_input
-
-        response = openai.completions.create(
-            model="gpt-3.5-turbo-instruct",
-            prompt=prompt,
-            temperature=0.5,
-            max_tokens=256,
-            # top_p=1,
-            # frequency_penalty=0.0,
-            # presence_penalty=0.6,
-            # stop="."
-        )
-        print(response)
-        chatbot_response = response.choices[0].text
+        try:
+            response = openai.completions.create(
+                model="gpt-3.5-turbo-instruct",
+                prompt=prompt,
+                temperature=0.5,
+                max_tokens=256,
+                # top_p=1,
+                # frequency_penalty=0.0,
+                # presence_penalty=0.6,
+                # stop="."
+            )
+            print(response)
+            chatbot_response = response.choices[0].text
+        except:
+            chatbot_response = "API key or response error!"
+    else:
+        chatbot_response = "Missing API Key!!!"
     return render(request, 'main.html', {"response": chatbot_response})
